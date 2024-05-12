@@ -5,6 +5,7 @@ SRC_URI = "git://git.yoctoproject.org/pseudo;branch=master;protocol=https \
            file://glibc238.patch \
            file://fallback-passwd \
            file://fallback-group \
+	   file://0002-fix-build-warnings.patch \
            "
 SRC_URI:append:class-native = " \
     http://downloads.yoctoproject.org/mirror/sources/pseudo-prebuilt-2.33.tar.xz;subdir=git/prebuilt;name=prebuilt \

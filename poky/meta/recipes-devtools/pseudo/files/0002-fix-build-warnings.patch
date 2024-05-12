@@ -1,0 +1,45 @@
+From b5545c08e6c674c49aef14b47a56a3e92df4d2a7 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Subject: [pseudo][PATCH] pseudolog.c: Fix build warnings seen with gcc-14
+Upstream-Status: Submitted [https://lists.yoctoproject.org/g/yocto/topic/pseudo_patch_pseudolog_c/104113669]
+Define _XOPEN_SOURCE or we do not get strptime() signature defined
+resulting in implicit-function-declaration which is an error in gcc-14
+
+Swap the parameters of calloc call to fix calloc-transposed-args warning
+
+pseudolog.c: In function 'plog_trait':
+pseudolog.c:378:34: warning: 'calloc' sizes specified with 'sizeof' in the earlier argument and not in the later argument [-Wcalloc-transposed-args]
+  378 |         new_trait = calloc(sizeof(*new_trait), 1);
+      |                                  ^
+pseudolog.c:378:34: note: earlier argument should specify number of elements, later size of each element
+
+Signed-off-by: Khem Raj <raj.khem@...>
+---
+ pseudolog.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/pseudolog.c b/pseudolog.c
+index 1101f28..ad04753 100644
+--- a/pseudolog.c
++++ b/pseudolog.c
+@@ -8,7 +8,8 @@
+  */
+ /* We need _XOPEN_SOURCE for strptime(), but if we define that,
+  * we then don't get S_IFSOCK... _GNU_SOURCE turns on everything. */
+-#define _GNU_SOURCE
++#define _DEFAULT_SOURCE
++#define _XOPEN_SOURCE
+ 
+ #include <ctype.h>
+ #include <limits.h>
+@@ -374,7 +375,7 @@ plog_trait(int opt, char *string) {
+ 		pseudo_diag("invalid empty string for -%c\n", opt);
+ 		return 0;
+ 	}
+-	new_trait = calloc(sizeof(*new_trait), 1);
++	new_trait = calloc(1, sizeof(*new_trait));
+ 	if (!new_trait) {
+ 		pseudo_diag("Couldn't allocate requested trait (for -%c %s)\n",
+ 			opt, string ? string : "<nil>");
+-- 
+2.43.0

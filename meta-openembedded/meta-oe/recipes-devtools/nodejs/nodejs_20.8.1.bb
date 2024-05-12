@@ -27,6 +27,7 @@ SRC_URI = "http://nodejs.org/dist/v${PV}/node-v${PV}.tar.xz \
            file://0001-Revert-io_uring-changes-from-libuv-1.46.0.patch \
            file://0002-Revert-io_uring-changes-from-libuv-1.45.0.patch \
            file://run-ptest \
+	   file://0002-add-algorithm.patch \
            "
 
 SRC_URI:append:class-target = " \

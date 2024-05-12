@@ -1,0 +1,15 @@
+From: Harrison Ford <harrison@hat.fo>
+Subject: Add algorithm to V8 build
+Upstream-Status: Inappropriate [embedded specific]
+diff --git a/deps/v8/src/heap/cppgc/stats-collector.h b/deps/v8/src/heap/cppgc/stats-collector.h
+index 2cf728489d..16fe2599b0 100644
+--- a/deps/v8/src/heap/cppgc/stats-collector.h
++++ b/deps/v8/src/heap/cppgc/stats-collector.h
+@@ -10,6 +10,7 @@
+
+ #include <atomic>
+ #include <vector>
++#include <algorithm>
+
+ #include "include/cppgc/platform.h"
+ #include "src/base/logging.h"
